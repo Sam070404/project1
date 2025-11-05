@@ -1,6 +1,6 @@
 #version 330 core
 
-#define NUMBER_OF_POINT_LIGHTS 4
+#define NUMBER_OF_POINT_LIGHTS 1
 
 struct Material
 {
@@ -35,8 +35,8 @@ struct SpotLight
 {
     vec3 position;
     vec3 direction;
-    float cutOff;//angulo interno
-    float outerCutOff;//angulo externo
+    float cutOff;
+    float outerCutOff;
     
     float constant;
     float linear;
