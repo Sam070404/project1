@@ -34,11 +34,14 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-		GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Modelado jerarquico", nullptr, nullptr);
-			int screenWidth, screenHeight;
+
+	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Modelado jerarquico", nullptr, nullptr);
+
+	int screenWidth, screenHeight;
 
 	glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
-		//Verificación de errores de creacion  ventana
+
+	//Verificación de errores de creacion  ventana
 	if (nullptr == window)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -46,16 +49,21 @@ int main() {
 
 		return EXIT_FAILURE;
 	}
-		glfwMakeContextCurrent(window);
+
+	glfwMakeContextCurrent(window);
 	glewExperimental = GL_TRUE;
-		//Verificación de errores de inicialización de glew
+
+	//Verificación de errores de inicialización de glew
 
 	if (GLEW_OK != glewInit()) {
 		std::cout << "Failed to initialise GLEW" << std::endl;
 		return EXIT_FAILURE;
 	}
+
+
 	// Define las dimensiones del viewport
 	glViewport(0, 0, screenWidth, screenHeight);
+
 
 	// Setup OpenGL options
 	glEnable(GL_DEPTH_TEST);
@@ -64,8 +72,10 @@ int main() {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+
 	// Build and compile our shader program
 	Shader ourShader("Shader/core.vs", "Shader/core.frag");
+
 
 	// Set up vertex data (and buffer(s)) and attribute pointers
 	// use with Orthographic Projection
@@ -133,14 +143,19 @@ int main() {
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 	
+
 	//Posicion
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3* sizeof(GLfloat), (GLvoid *)0);
 	glEnableVertexAttribArray(0);
-		
+
+	
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+
 	glBindVertexArray(0); // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs)
-		
+
+	
 	glm::mat4 projection=glm::mat4(1);
 
 	projection = glm::perspective(glm::radians(45.0f), (GLfloat)screenWidth / (GLfloat)screenHeight, 0.1f, 100.0f);//FOV, Radio de aspecto,znear,zfar
@@ -156,12 +171,14 @@ int main() {
 		// Clear the colorbuffer
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
-						
+
+
+		
 		ourShader.Use();
 		glm::mat4 model=glm::mat4(1);
 		glm::mat4 view=glm::mat4(1);
 		glm::mat4 modelTemp = glm::mat4(1.0f); //Temp
-		glm::mat4 modelTemp2 = glm::mat4(1.0f); //Temp vistas temporales para jugar con la jerarquia
+		glm::mat4 modelTemp2 = glm::mat4(1.0f); //Tempvistas temporalespara jugar con la jerarquia
 
 
 
@@ -213,7 +230,7 @@ int main() {
 
 		//Model dedo1u
 		model = glm::translate(modelTemp, glm::vec3(0.25f, 0.0f, 0.0f)); 
-		model = glm::rotate(model, glm::radians(dedo1u), glm::vec3(0.0f, 0.0, 1.0f)); 
+		model = glm::rotate(model, glm::radians(dedo1u), glm::vec3(0.0f, 0.0, 1.0f)); //muñeca 
 		modelTemp2 = model = glm::translate(model, glm::vec3(0.3f, 0.3f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.6f, 0.2f, 0.2f));
 		color = glm::vec3(0.0f, 0.0f, 1.0f); 
@@ -223,7 +240,7 @@ int main() {
 
 		//Model dedo1d
 		model = glm::translate(modelTemp2, glm::vec3(0.3f, 0.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(dedo1d), glm::vec3(0.0f, 0.0, 1.0f)); 
+		model = glm::rotate(model, glm::radians(dedo1d), glm::vec3(0.0f, 0.0, 1.0f)); //muñeca
 		modelTemp2 = model = glm::translate(model, glm::vec3(0.2f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.4f, 0.2f, 0.2f));
 		color = glm::vec3(1.0f, 1.0f, 0.0f);
@@ -232,44 +249,44 @@ int main() {
 		glDrawArrays(GL_TRIANGLES, 0, 36);//A 
 
 		//Model dedo2u
-		model = glm::translate(modelTemp, glm::vec3(0.25f, 0.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(dedo2u), glm::vec3(0.0f, 0.0, 1.0f)); 
-		modelTemp2 = model = glm::translate(model, glm::vec3(0.3f, 0.3f, 0.3f)); 
+		model = glm::translate(modelTemp, glm::vec3(0.3f, 0.3f, 0.2f));
+		model = glm::rotate(model, glm::radians(dedo1u), glm::vec3(0.0f, 0.0, 1.0f)); //muñeca  
+		modelTemp2 = model = glm::translate(model, glm::vec3(0.3f, 0.3f, 0.0f)); 
 		model = glm::scale(model, glm::vec3(0.6f, 0.2f, 0.2f)); 
-		color = glm::vec3(0.0f, 0.5f, 1.0f); 
+		color = glm::vec3(0.0f, 0.0f, 1.0f); 
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color)); 
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model)); 
 		glDrawArrays(GL_TRIANGLES, 0, 36);//A  
 
-		//Model dedo2d
-		model = glm::translate(modelTemp2, glm::vec3(0.3f, 0.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(dedo2d), glm::vec3(0.0f, 0.0, 1.0f)); 
-		modelTemp2 = model = glm::translate(model, glm::vec3(0.2f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.4f, 0.2f, 0.2f));
-		color = glm::vec3(0.5f, 1.0f, 0.0f);
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glDrawArrays(GL_TRIANGLES, 0, 36);//A 
+		////Model dedo2d
+		//model = glm::translate(modelTemp2, glm::vec3(0.3f, 0.0f, 0.0f));
+		//model = glm::rotate(model, glm::radians(dedo1d), glm::vec3(0.0f, 0.0, 1.0f)); //muñeca
+		//modelTemp2 = model = glm::translate(model, glm::vec3(0.2f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(0.4f, 0.2f, 0.2f));
+		//color = glm::vec3(1.0f, 1.0f, 0.0f);
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//glDrawArrays(GL_TRIANGLES, 0, 36);//A 
 
-		//Model dedo3u
-		model = glm::translate(modelTemp, glm::vec3(0.25f, 0.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(dedo3u), glm::vec3(0.0f, 0.0, 1.0f)); 
-		modelTemp2 = model = glm::translate(model, glm::vec3(0.3f, 0.3f, -0.3f));
-		model = glm::scale(model, glm::vec3(0.6f, 0.2f, 0.2f));
-		color = glm::vec3(0.0f, 1.5f, 1.0f);
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glDrawArrays(GL_TRIANGLES, 0, 36);//A 
+		////Model dedo3u
+		//model = glm::translate(modelTemp, glm::vec3(0.25f, 0.0f, 0.0f));
+		//model = glm::rotate(model, glm::radians(dedo1u), glm::vec3(0.0f, 0.0, 1.0f)); //muñeca 
+		//modelTemp2 = model = glm::translate(model, glm::vec3(0.3f, 0.3f, 0.0f));
+		//model = glm::scale(model, glm::vec3(0.6f, 0.2f, 0.2f));
+		//color = glm::vec3(0.0f, 0.0f, 1.0f);
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//glDrawArrays(GL_TRIANGLES, 0, 36);//A 
 
-		//Model dedo3d
-		model = glm::translate(modelTemp2, glm::vec3(0.3f, 0.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(dedo3d), glm::vec3(0.0f, 0.0, 1.0f)); 
-		modelTemp2 = model = glm::translate(model, glm::vec3(0.2f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.4f, 0.2f, 0.2f));
-		color = glm::vec3(1.0f, 0.5f, 0.0f);
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glDrawArrays(GL_TRIANGLES, 0, 36);//A 
+		////Model dedo3d
+		//model = glm::translate(modelTemp2, glm::vec3(0.3f, 0.0f, 0.0f));
+		//model = glm::rotate(model, glm::radians(dedo1d), glm::vec3(0.0f, 0.0, 1.0f)); //muñeca
+		//modelTemp2 = model = glm::translate(model, glm::vec3(0.2f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(0.4f, 0.2f, 0.2f));
+		//color = glm::vec3(1.0f, 1.0f, 0.0f);
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//glDrawArrays(GL_TRIANGLES, 0, 36);//A 
 
 		glBindVertexArray(0);
 
@@ -290,17 +307,17 @@ int main() {
 	 if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)  //GLFW_RELEASE
 		 glfwSetWindowShouldClose(window, true);
 	 if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		 movX += 0.008f;
+		 movX += 0.08f;
 	 if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		 movX -= 0.008f;
+		 movX -= 0.08f;
 	 if (glfwGetKey(window,GLFW_KEY_UP) == GLFW_PRESS)
-		 movY += 0.008f;
+		 movY += 0.08f;
 	 if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-		 movY -= 0.008f;
+		 movY -= 0.08f;
 	 if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		 movZ -= 0.008f;
+		 movZ -= 0.08f;
 	 if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		 movZ += 0.008f;
+		 movZ += 0.08f;
 	 if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 		 rot += 0.18f;
 	 if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
