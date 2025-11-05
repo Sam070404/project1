@@ -100,7 +100,6 @@ int main()
 	// Set up vertex data (and buffer(s)) and attribute pointers
 	GLfloat vertices[] =
 	{
-
 		// Positions(xy)        // Colors      // Texture Coords(u,v)  original/ventanas
 		-0.5f, -0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.5f,0.0f,
 		0.5f, -0.5f, 0.0f,	   1.0f, 1.0f,1.0f,		3.0f,0.0f,
@@ -125,13 +124,12 @@ int main()
 		//0.5f,  0.5f, 0.0f,     1.0f,1.0f,1.0f,	    0.5f,1.0f,
 		//-0.5f,  0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.0f,1.0f,
 
-		// Positions(xy)        // Colors      // Texture Coords(u,v)  central
-		-0.5f, -0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.25f,0.25f,
-		0.5f, -0.5f, 0.0f,	   1.0f, 1.0f,1.0f,		0.75f,0.25f,
-		0.5f,  0.5f, 0.0f,     1.0f,1.0f,1.0f,	    0.75f,0.75f,
-		-0.5f,  0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.25f,0.75f,
+		//// Positions(xy)        // Colors      // Texture Coords(u,v)  central
+		//-0.5f, -0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.25f,0.25f,
+		//0.5f, -0.5f, 0.0f,	   1.0f, 1.0f,1.0f,		0.75f,0.25f,
+		//0.5f,  0.5f, 0.0f,     1.0f,1.0f,1.0f,	    0.75f,0.75f,
+		//-0.5f,  0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.25f,0.75f,
 
-		
 		
 	};
 
